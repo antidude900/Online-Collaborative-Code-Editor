@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { LANGUAGES } from "../constants";
+import { LANGUAGES } from "../../constants";
 
 // eslint-disable-next-line react/prop-types
 export default function LanguageMenu({language,setLanguage}) {

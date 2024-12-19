@@ -6,8 +6,8 @@ export const LANGUAGES = {
 };
 
 export const CODE_SNIPPETS = {
-	c: `\n#include <stdio.h>\n\nint main() {\n\tprintf("Hello World");\n\n\treturn 0;\n}\n`,
-	cpp: '\n#include <iostream>\nusing namespace std;\n\nint main() {\ncout << "Hello World";\n\nreturn 0;\n}',
-	python: `\ndef greet():\n\tprint("Hello World")\ngreet()\n`,
-	javascript: `\nfunction greet() {\n\tconsole.log("Hello World");\n}\ngreet();\n`,
+	c: `#include <stdio.h>\n\nint main() {\n\tprintf("Hello World");\n\n\treturn 0;\n}\n`,
+	cpp: '#include <iostream>\nusing namespace std;\n\nint main() {\ncout << "Hello World";\n\nreturn 0;\n}',
+	python: `def greet():\n\tprint("Hello World")\ngreet()\n`,
+	javascript: `function greet(){\n\tconsole.log("Hello World");\n}\ngreet();\n`,
 };
