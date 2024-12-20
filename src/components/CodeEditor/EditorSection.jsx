@@ -1,24 +1,107 @@
-import Editor from "@monaco-editor/react";
+import { EditorState } from "@codemirror/state";
+import { openSearchPanel, highlightSelectionMatches } from "@codemirror/search";
+import {
+	indentWithTab,
+	history,
+	defaultKeymap,
+	historyKeymap,
+} from "@codemirror/commands";
+import {
+	foldGutter,
+	indentOnInput,
+	indentUnit,
+	bracketMatching,
+	foldKeymap,
+	syntaxHighlighting,
+	defaultHighlightStyle,
+} from "@codemirror/language";
+import {
+	closeBrackets,
+	autocompletion,
+	closeBracketsKeymap,
+	completionKeymap,
+} from "@codemirror/autocomplete";
+import {
+	lineNumbers,
+	highlightActiveLineGutter,
+	highlightSpecialChars,
+	drawSelection,
+	dropCursor,
+	rectangularSelection,
+	crosshairCursor,
+	highlightActiveLine,
+	keymap,
+	EditorView,
+} from "@codemirror/view";
+
+// Theme
+import { dracula } from "thememirror";
+
+// Language
+import { javascript } from "@codemirror/lang-javascript";
+import { useEffect, useRef } from "react";
+import "./a.css"
 
 // eslint-disable-next-line react/prop-types
-export default function EditorSection({ code, setCode, language }) {
-	const editorOptions = {
-		minimap: { enabled: false },
-		padding: { top: 20, bottom: 0 },
-		fontSize: 15,
-		scrollBeyondLastLine: false,
-	};
+export default function EditorSection({ code, setCode, language, isLoading }) {
+	const editor = useRef();
+
+	const onUpdate = EditorView.updateListener.of((v) => {
+		setCode(v.state.doc.toString());
+	});
+
+	let extensions = [
+		lineNumbers(),
+		highlightActiveLineGutter(),
+		highlightSpecialChars(),
+		history(),
+		foldGutter(),
+		drawSelection(),
+		indentUnit.of("    "),
+		EditorState.allowMultipleSelections.of(true),
+		indentOnInput(),
+		bracketMatching(),
+		closeBrackets(),
+		autocompletion(),
+		rectangularSelection(),
+		crosshairCursor(),
+		highlightSelectionMatches(),
+		keymap.of([
+			indentWithTab,
+			...closeBracketsKeymap,
+			...defaultKeymap,
+			...historyKeymap,
+			...foldKeymap,
+			...completionKeymap,
+		]),
+		javascript(),
+		syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+		dracula,
+		onUpdate,
+	];
+
+	useEffect(() => {
+		const startState = EditorState.create({
+			doc: "Hello World",
+			extensions,
+		});
+
+		const view = new EditorView({ state: startState, parent: editor.current });
+
+		return () => {
+			view.destroy();
+		};
+	}, []);
 
 	return (
-		<div className="editor border-4 border-gray-800 p-2 rounded-[10px] h-[80vh]">
-			<Editor
-				height="100%"
-				theme="vs-dark"
-				language={language === "c/cpp" ? "cpp" : language}
-				value={code}
-				onChange={(value) => setCode(value)}
-				options={editorOptions}
-			/>
+		<div
+			className={`${
+				isLoading ? "card" : "border-4 rounded-[10px] border-gray-700"
+			} h-[80vh] `}
+		>
+			<div className="bg-[#282A36] h-full z-1 p-5 border border-transparent rounded-[10px]	">
+				<div ref={editor}></div>
+			</div>
 		</div>
 	);
 }

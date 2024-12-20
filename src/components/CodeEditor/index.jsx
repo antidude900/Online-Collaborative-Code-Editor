@@ -7,12 +7,10 @@ import OutputSection from "./OutputSection.jsx";
 
 export default function CodeEditor() {
 	const [language, setLanguage] = useState("javascript");
-	const [code, setCode] = useState("Write your code here");
+	const [code, setCode] = useState("");
 	const [output, setOutput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(null);
-
-
 
 	useEffect(() => {
 		setCode(CODE_SNIPPETS[language]);
@@ -57,14 +55,15 @@ export default function CodeEditor() {
 						</div>
 					</div>
 				</div>
-
-				
-                    <EditorSection code={code} setCode={setCode} language={language}/>
-				
+				<EditorSection
+					code={code}
+					setCode={setCode}
+					language={language}
+					isLoading={isLoading}
+				/>
 			</div>
 
-            <OutputSection output={output} isError={isError}/>
-
+			<OutputSection output={output} isError={isError} />
 		</>
 	);
 }
