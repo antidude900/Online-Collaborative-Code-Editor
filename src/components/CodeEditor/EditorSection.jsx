@@ -1,5 +1,5 @@
 import { EditorState } from "@codemirror/state";
-import { openSearchPanel, highlightSelectionMatches } from "@codemirror/search";
+import {  highlightSelectionMatches } from "@codemirror/search";
 import {
 	indentWithTab,
 	history,
@@ -26,10 +26,10 @@ import {
 	highlightActiveLineGutter,
 	highlightSpecialChars,
 	drawSelection,
-	dropCursor,
+	// dropCursor,
 	rectangularSelection,
 	crosshairCursor,
-	highlightActiveLine,
+	// highlightActiveLine,
 	keymap,
 	EditorView,
 } from "@codemirror/view";
@@ -39,12 +39,30 @@ import { dracula } from "thememirror";
 
 // Language
 import { javascript } from "@codemirror/lang-javascript";
+import { python } from "@codemirror/lang-python";
+import { cpp } from "@codemirror/lang-cpp";
 import { useEffect, useRef } from "react";
-import "./a.css"
+import "./a.css";
+import { CODE_SNIPPETS } from "../../constants";
 
 // eslint-disable-next-line react/prop-types
-export default function EditorSection({ code, setCode, language, isLoading }) {
+export default function EditorSection({ setCode, language, isLoading }) {
 	const editor = useRef();
+
+	function getLanguage(language) {
+		switch (language) {
+			case "javascript":
+				return javascript();
+			case "python":
+				return python();
+			case "c":
+				return cpp();
+			case "cpp":
+				return cpp();
+			default:
+				return javascript(); // Fallback
+		}
+	}
 
 	const onUpdate = EditorView.updateListener.of((v) => {
 		setCode(v.state.doc.toString());
@@ -74,7 +92,7 @@ export default function EditorSection({ code, setCode, language, isLoading }) {
 			...foldKeymap,
 			...completionKeymap,
 		]),
-		javascript(),
+		getLanguage(language),
 		syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
 		dracula,
 		onUpdate,
@@ -82,7 +100,7 @@ export default function EditorSection({ code, setCode, language, isLoading }) {
 
 	useEffect(() => {
 		const startState = EditorState.create({
-			doc: "Hello World",
+			doc: CODE_SNIPPETS[language],
 			extensions,
 		});
 
@@ -91,7 +109,8 @@ export default function EditorSection({ code, setCode, language, isLoading }) {
 		return () => {
 			view.destroy();
 		};
-	}, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [language]);
 
 	return (
 		<div
@@ -100,7 +119,7 @@ export default function EditorSection({ code, setCode, language, isLoading }) {
 			} h-[80vh] `}
 		>
 			<div className="bg-[#282A36] h-full z-1 p-5 border border-transparent rounded-[10px]	">
-				<div ref={editor}></div>
+				<div ref={editor} className="h-full"></div>
 			</div>
 		</div>
 	);

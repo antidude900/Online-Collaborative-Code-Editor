@@ -7,7 +7,7 @@ import OutputSection from "./OutputSection.jsx";
 
 export default function CodeEditor() {
 	const [language, setLanguage] = useState("javascript");
-	const [code, setCode] = useState("");
+	const [code, setCode] = useState("Write your code here:");
 	const [output, setOutput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(null);
@@ -39,9 +39,9 @@ export default function CodeEditor() {
 	return (
 		<>
 			<div className="editor grow">
-				<div className="labels flex align-bottom mb-5">
-					<div className="label w-[100px] text-[20px] font-bold ml-3">
-						Editor
+				<div className="labels flex items-center mb-5 h-[50px]">
+					<div className="label w-[100px] font-bold ml-3">
+						<img src="../../../logo3.png" width={70} height={10} />
 					</div>
 					<div className="label-buttons flex justify-between grow mr-3">
 						<LanguageMenu language={language} setLanguage={setLanguage} />
@@ -56,7 +56,6 @@ export default function CodeEditor() {
 					</div>
 				</div>
 				<EditorSection
-					code={code}
 					setCode={setCode}
 					language={language}
 					isLoading={isLoading}

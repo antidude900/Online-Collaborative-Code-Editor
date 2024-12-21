@@ -2,9 +2,11 @@
 
 export default function OutputSection({ output, isError }) {
 	return (
-		<div className="output w-[555px] ml-5">
-			<div className="flex align-bottom mb-5">
-				<div className="label w-[100px] text-[20px] font-bold ml-3">Output</div>
+		<div className="output w-[555px] ml-5 ">
+			<div className="flex items-center mb-5 h-[50px]">
+				<div className="label w-[100px] text-[20px] font-bold ml-3 ">
+					Output
+				</div>
 			</div>
 			<div
 				className={`editor border-4 ${
