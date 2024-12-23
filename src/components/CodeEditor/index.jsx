@@ -3,7 +3,7 @@ import LanguageMenu from "./LanguageMenu";
 import { CODE_SNIPPETS } from "../../constants.js";
 import { executeCode } from "../../Api";
 import EditorSection from "./EditorSection.jsx";
-import OutputSection from "./OutputSection.jsx";
+import InputOutputSection from "./InputOutputSection.jsx";
 
 export default function CodeEditor() {
 	const [language, setLanguage] = useState("javascript");
@@ -38,31 +38,33 @@ export default function CodeEditor() {
 
 	return (
 		<>
-			<div className="editor grow">
-				<div className="labels flex items-center mb-5 h-[50px]">
-					<div className="label w-[100px] font-bold ml-3">
-						<img src="../../../logo3.png" width={70} height={10} />
-					</div>
-					<div className="label-buttons flex justify-between grow mr-3">
-						<LanguageMenu language={language} setLanguage={setLanguage} />
-						<div
-							className={`btn ${
-								isLoading ? "cursor-not-allowed opacity-50" : ""
-							}`}
-							onClick={runCode}
-						>
-							Submit
+			<div className="whole-editor flex">
+				<div className="editor grow">
+					<div className="labels flex items-center mb-5 h-[50px]">
+						<div className="label w-[100px] font-bold ml-3">
+							<img src="../../../logo3.png" width={70} height={10} />
+						</div>
+						<div className="label-buttons flex justify-between grow mr-3">
+							<LanguageMenu language={language} setLanguage={setLanguage} />
+							<div
+								className={`btn ${
+									isLoading ? "cursor-not-allowed opacity-50" : ""
+								}`}
+								onClick={runCode}
+							>
+								Submit
+							</div>
 						</div>
 					</div>
+					<EditorSection
+						setCode={setCode}
+						language={language}
+						isLoading={isLoading}
+					/>
 				</div>
-				<EditorSection
-					setCode={setCode}
-					language={language}
-					isLoading={isLoading}
-				/>
-			</div>
 
-			<OutputSection output={output} isError={isError} />
+				<InputOutputSection output={output} isError={isError} />
+			</div>
 		</>
 	);
 }
