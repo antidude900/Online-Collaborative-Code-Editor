@@ -15,13 +15,13 @@ export default function InputOutputSection({ output, isError }) {
 							: "border-gray-700"
 					} p-2 rounded-[10px] `}
 				>
-					{output
-						? output.map((line, i) => (
-								<div key={i} className=" break-words">
-									{line}
+					{/* {output
+						? 
+								<div className=" break-words">
+									{ou}
 								</div>
 						  ))
-						: "Run Code to See Output"}
+						: "Run Code to See Output"} */}
 				</div>
 			</div>
 
@@ -36,13 +36,15 @@ export default function InputOutputSection({ output, isError }) {
 							: "border-gray-700"
 					} p-2 rounded-[10px] h-full`}
 				>
-					{output
-						? output.map((line, i) => (
-								<div key={i} className=" break-words">
-									{line}
-								</div>
-						  ))
-						: "Run Code to See Output"}
+					<div className="overflow-auto max-w-full max-h-[400px] p-1">
+						{output
+							? output.split("\n").map((line, i) => (
+									<div key={i} className=" break-words">
+										{line}
+									</div>
+							  ))
+							: "Run Code to See Output"}
+					</div>
 				</div>
 			</div>
 		</div>

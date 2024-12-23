@@ -1,8 +1,8 @@
 export const LANGUAGES = {
-	c: "10.2.0",
-	cpp: "10.2.0",
-	python: "3.10.0",
-	javascript: "18.15.0",
+	c: 105,
+	cpp: 105,
+	python: 100,
+	javascript: 102
 };
 
 export const CODE_SNIPPETS = {

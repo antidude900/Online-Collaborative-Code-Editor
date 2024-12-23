@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LanguageMenu from "./LanguageMenu";
 import { CODE_SNIPPETS } from "../../constants.js";
-import { executeCode } from "../../Api";
+import { makeSubmission } from "../../Api";
 import EditorSection from "./EditorSection.jsx";
 import InputOutputSection from "./InputOutputSection.jsx";
 
@@ -17,23 +17,24 @@ export default function CodeEditor() {
 		setOutput("");
 	}, [language]);
 
+	useEffect(()=>{
+		console.log(output)
+	},[output])
+
 	useEffect(() => {
 		setIsError(null);
 	}, [code]);
 
-	async function runCode() {
-		if (!code) return;
-		try {
-			setIsLoading(true);
-			const { run: result } = await executeCode(language, code);
-			setOutput(result.output.split("\n"));
-			result.stderr ? setIsError(true) : setIsError(false);
-			console.log(result.output.split("\n"));
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsLoading(false);
-		}
+	function callback({ data }) {
+		console.log(data)
+		if (data.status_id === 3) setOutput(atob(data.stdout));
+		else setOutput(atob(data.stderr));
+		setIsLoading(false);
+	}
+
+	function runCode() {
+		setIsLoading(true);
+		makeSubmission({ code, language, callback });
 	}
 
 	return (
