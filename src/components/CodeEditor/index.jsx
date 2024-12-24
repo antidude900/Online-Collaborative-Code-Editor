@@ -43,7 +43,7 @@ export default function CodeEditor() {
 				<div className="editor grow">
 					<div className="labels flex items-center mb-5 h-[50px]">
 						<div className="label w-[100px] font-bold ml-3">
-							<img src="../../../logo3.png" width={70} height={10} />
+							<img src="../../../logo.png" width={70} height={10} />
 						</div>
 						<div className="label-buttons flex justify-between grow mr-3">
 							<LanguageMenu language={language} setLanguage={setLanguage} />
