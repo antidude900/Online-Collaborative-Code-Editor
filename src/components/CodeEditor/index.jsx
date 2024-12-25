@@ -17,18 +17,23 @@ export default function CodeEditor() {
 		setOutput("");
 	}, [language]);
 
-	useEffect(()=>{
-		console.log(output)
-	},[output])
+	useEffect(() => {
+		console.log(output);
+	}, [output]);
 
 	useEffect(() => {
 		setIsError(null);
 	}, [code]);
 
 	function callback({ data }) {
-		console.log(data)
-		if (data.status_id === 3) setOutput(atob(data.stdout));
-		else setOutput(atob(data.stderr));
+		console.log(data);
+		if (data.status_id === 3) {
+			setOutput(atob(data.stdout));
+			setIsError(true);
+		} else {
+			setOutput(atob(data.stderr));
+			setIsError(false);
+		}
 		setIsLoading(false);
 	}
 

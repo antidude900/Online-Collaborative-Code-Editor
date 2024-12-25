@@ -15,13 +15,7 @@ export default function InputOutputSection({ output, isError }) {
 							: "border-gray-700"
 					} p-2 rounded-[10px] `}
 				>
-					{/* {output
-						? 
-								<div className=" break-words">
-									{ou}
-								</div>
-						  ))
-						: "Run Code to See Output"} */}
+
 				</div>
 			</div>
 
