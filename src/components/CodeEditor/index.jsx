@@ -29,10 +29,10 @@ export default function CodeEditor() {
 		console.log(data);
 		if (data.status_id === 3) {
 			setOutput(atob(data.stdout));
-			setIsError(true);
+			setIsError(false);
 		} else {
 			setOutput(atob(data.stderr));
-			setIsError(false);
+			setIsError(treu);
 		}
 		setIsLoading(false);
 	}
