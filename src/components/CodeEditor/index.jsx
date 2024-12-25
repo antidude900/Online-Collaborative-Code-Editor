@@ -32,7 +32,7 @@ export default function CodeEditor() {
 			setIsError(false);
 		} else {
 			setOutput(atob(data.stderr));
-			setIsError(treu);
+			setIsError(true);
 		}
 		setIsLoading(false);
 	}
