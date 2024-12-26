@@ -1,8 +1,13 @@
 /* eslint-disable react/prop-types */
 
-export default function InputOutputSection({ output, isError }) {
+export default function InputOutputSection({
+	output,
+	isError,
+	input,
+	setInput,
+}) {
 	return (
-		<div className="input-output grow ml-10 h-[80vh] flex flex-col mt-[70px]">
+		<div className="input-output w-[40vw] ml-10 h-[80vh] flex flex-col mt-[70px]">
 			<div className="input-box h-[30%] mb-[20px] flex flex-col">
 				<div className="Label w-[100px] text-[20px] font-bold h-[20%]">
 					Input
@@ -16,7 +21,14 @@ export default function InputOutputSection({ output, isError }) {
 								: "border-green-700"
 							: "border-gray-700"
 					} p-2 rounded-[10px] `}
-				></div>
+				>
+					<textarea
+						className="w-full h-full bg-inherit outline-none"
+						placeholder="Enter inputs here..."
+						value={input}
+						onChange={(e) => setInput(e.target.value)}
+					/>
+				</div>
 			</div>
 
 			<div className="output-box h-[70%] flex flex-col">
@@ -32,9 +44,9 @@ export default function InputOutputSection({ output, isError }) {
 							: "border-gray-700"
 					} p-2 rounded-[10px]`}
 				>
-					<div className="overflow-auto max-w-full h-[98%] p-1">
+					<div className="overflow-auto w-full h-[98%] p-1">
 						{output
-							? output.split("\n").map((line, i) => (
+							? output.map((line, i) => (
 									<div key={i} className=" break-words">
 										{line}
 									</div>

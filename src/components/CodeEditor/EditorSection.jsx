@@ -42,7 +42,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
 import { useEffect, useRef } from "react";
-import "./a.css";
+import "./loading-animation.css";
 import { CODE_SNIPPETS } from "../../constants";
 
 // eslint-disable-next-line react/prop-types

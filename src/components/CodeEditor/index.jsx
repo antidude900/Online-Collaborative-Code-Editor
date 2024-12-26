@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LanguageMenu from "./LanguageMenu";
 import { CODE_SNIPPETS } from "../../constants.js";
-import { makeSubmission } from "../../Api";
+import { executeCode } from "../../Api";
 import EditorSection from "./EditorSection.jsx";
 import InputOutputSection from "./InputOutputSection.jsx";
 
@@ -9,12 +9,14 @@ export default function CodeEditor() {
 	const [language, setLanguage] = useState("javascript");
 	const [code, setCode] = useState("Write your code here:");
 	const [output, setOutput] = useState("");
+	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(null);
 
 	useEffect(() => {
 		setCode(CODE_SNIPPETS[language]);
 		setOutput("");
+		setInput("");
 	}, [language]);
 
 	useEffect(() => {
@@ -22,30 +24,36 @@ export default function CodeEditor() {
 	}, [output]);
 
 	useEffect(() => {
+		console.log(input);
+	}, [input]);
+
+	useEffect(() => {
 		setIsError(null);
 	}, [code]);
 
-	function callback({ data }) {
-		console.log(data);
-		if (data.status_id === 3) {
-			setOutput(atob(data.stdout));
-			setIsError(false);
-		} else {
-			setOutput(atob(data.stderr));
-			setIsError(true);
+	async function runCode() {
+		if (!code) return;
+		try {
+			setIsLoading(true);
+			const { run: result } = await executeCode(
+				language,
+				code,
+				input,
+				setInput
+			);
+			setOutput(result.output.split("\n"));
+			result.stderr ? setIsError(true) : setIsError(false);
+			console.log(result.output.split("\n"));
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
 		}
-		setIsLoading(false);
 	}
-
-	function runCode() {
-		setIsLoading(true);
-		makeSubmission({ code, language, callback });
-	}
-
 	return (
 		<>
 			<div className="whole-editor flex">
-				<div className="editor w-[55vw]">
+				<div className="editor w-[60vw]">
 					<div className="labels flex items-center mb-5 h-[50px]">
 						<div className="label w-[100px] font-bold ml-3">
 							<img src="../../../logo.png" width={70} height={10} />
@@ -69,7 +77,12 @@ export default function CodeEditor() {
 					/>
 				</div>
 
-				<InputOutputSection output={output} isError={isError} />
+				<InputOutputSection
+					output={output}
+					isError={isError}
+					input={input}
+					setInput={setInput}
+				/>
 			</div>
 		</>
 	);
