@@ -45,7 +45,7 @@ export default function CodeEditor() {
 	return (
 		<>
 			<div className="whole-editor flex">
-				<div className="editor grow">
+				<div className="editor w-[55vw]">
 					<div className="labels flex items-center mb-5 h-[50px]">
 						<div className="label w-[100px] font-bold ml-3">
 							<img src="../../../logo.png" width={70} height={10} />
