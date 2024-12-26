@@ -23,7 +23,7 @@ export default function InputOutputSection({
 					} p-2 rounded-[10px] `}
 				>
 					<textarea
-						className="w-full h-full bg-inherit outline-none"
+						className="w-full h-full bg-inherit outline-none resize-none"
 						placeholder="Enter inputs here..."
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
