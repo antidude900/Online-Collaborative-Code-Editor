@@ -4,6 +4,7 @@ import { CODE_SNIPPETS } from "../../constants.js";
 import { executeCode } from "../../Api";
 import EditorSection from "./EditorSection.jsx";
 import InputOutputSection from "./InputOutputSection.jsx";
+import SendEmail from "./SendEmail.jsx";
 
 export default function CodeEditor() {
 	const [language, setLanguage] = useState("javascript");
@@ -64,6 +65,8 @@ export default function CodeEditor() {
 						</div>
 						<div className="label-buttons flex justify-between grow mr-3">
 							<LanguageMenu language={language} setLanguage={setLanguage} />
+
+							<SendEmail code={code} input={input} output={output}/>
 							<div
 								className={`btn ${
 									isLoading ? "cursor-not-allowed opacity-50" : ""
