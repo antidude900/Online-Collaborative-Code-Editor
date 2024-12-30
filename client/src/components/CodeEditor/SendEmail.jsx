@@ -9,7 +9,7 @@ export default function SendEmail({ code, input, output }) {
 		console.log(to, message);
 		try {
 			setSending(true);
-			await axios.post("http://localhost:3030/", {
+			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/SendMail`, {
 				to: to,
 				subject: "Code From LinkCode",
 				message: message,

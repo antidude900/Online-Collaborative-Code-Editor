@@ -4,7 +4,9 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+	origin: process.env.FRONTEND_URL
+}));
 app.use(express.json());
 const transporter = nodemailer.createTransport({
 	service: "Gmail",
@@ -13,7 +15,7 @@ const transporter = nodemailer.createTransport({
 		pass: process.env.EMAIL_PASS,
 	},
 });
-app.post("/", (req, res) => {
+app.post("/api/sendMail", (req, res) => {
 	const mailOptions = {
 		from: process.env.EMAIL,
 		to: req.body.to,
