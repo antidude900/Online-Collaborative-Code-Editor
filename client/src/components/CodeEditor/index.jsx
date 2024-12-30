@@ -58,7 +58,7 @@ export default function CodeEditor() {
 					<div className="labels flex items-center mb-5 h-[50px]">
 						<div className="label w-[100px] font-bold ml-3">
 							<img
-								src="/Online-Collaborative-Code-Editor/logo.png"
+								src="/logo.png"
 								width={70}
 								height={10}
 							/>
