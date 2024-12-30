@@ -4,9 +4,12 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
-app.use(cors({
-	origin: process.env.FRONTEND_URL
-}));
+app.use(
+	cors({
+		origin: process.env.FRONTEND_URL,
+	})
+);
+
 app.use(express.json());
 const transporter = nodemailer.createTransport({
 	service: "Gmail",
@@ -15,7 +18,9 @@ const transporter = nodemailer.createTransport({
 		pass: process.env.EMAIL_PASS,
 	},
 });
+
 app.post("/api/sendMail", (req, res) => {
+	console.log("reached")
 	const mailOptions = {
 		from: process.env.EMAIL,
 		to: req.body.to,
@@ -31,5 +36,10 @@ app.post("/api/sendMail", (req, res) => {
 		res.status(200).send("Email sent successfully");
 	});
 });
-const port = 3030;
+
+app.get("/", (req, res) => {
+	res.send("Server is listening....");
+});
+
+const port = 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
