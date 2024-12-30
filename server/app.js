@@ -9,13 +9,13 @@ app.use(express.json());
 const transporter = nodemailer.createTransport({
 	service: "Gmail",
 	auth: {
-		user: "splashofwater900@gmail.com",
+		user: process.env.EMAIL,
 		pass: process.env.EMAIL_PASS,
 	},
 });
 app.post("/", (req, res) => {
 	const mailOptions = {
-		from: req.body.from,
+		from: process.env.EMAIL,
 		to: req.body.to,
 		subject: req.body.subject,
 		text: req.body.message,

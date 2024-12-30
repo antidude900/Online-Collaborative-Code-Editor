@@ -10,7 +10,6 @@ export default function SendEmail({ code, input, output }) {
 		try {
 			setSending(true);
 			await axios.post("http://localhost:3030/", {
-				from: "splashfwater900@gmail.com",
 				to: to,
 				subject: "Code From LinkCode",
 				message: message,
