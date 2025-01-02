@@ -73,7 +73,7 @@ export default function CodeEditor() {
 								}`}
 								onClick={runCode}
 							>
-								Submit
+								Run
 							</div>
 						</div>
 					</div>
