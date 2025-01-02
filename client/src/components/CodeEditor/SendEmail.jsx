@@ -45,7 +45,9 @@ export default function SendEmail({ code, input, output }) {
 							onChange={(e) => setAddress(e.target.value)}
 						/>
 						<div
-							className="btn"
+							className={`btn ${
+								sending ? "cursor-not-allowed opacity-50" : ""
+							}`}
 							onClick={() =>
 								send(
 									address,
