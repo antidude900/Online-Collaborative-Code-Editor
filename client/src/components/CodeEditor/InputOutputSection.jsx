@@ -1,17 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
+import { PLACEHOLDER } from "../../constants";
 
-const placeholder = `Example:
-for input x
-      input y z
-you can do:
-      2 
-      3 4
-which assigns: x=2,y=3,z=4
 
-Also, you don't need input message like: input_msg "Enter x:"
-It will only make your output look ugly!
-`;
 
 export default function InputOutputSection({ output, isError, setInput }) {
 	const [isScrollable, setIsScrollable] = useState(false);
@@ -82,7 +73,7 @@ export default function InputOutputSection({ output, isError, setInput }) {
 					<textarea
 						ref={textareaRef}
 						className="w-full h-full bg-inherit outline-none resize-none"
-						placeholder={placeholder}
+						placeholder={PLACEHOLDER}
 						onChange={handleInputChange}
 					/>
 					{isScrollable && (

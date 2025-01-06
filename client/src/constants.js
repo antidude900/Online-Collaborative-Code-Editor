@@ -11,3 +11,15 @@ export const CODE_SNIPPETS = {
 	python: `def greet():\n\tprint("Hello World")\ngreet()\n`,
 	javascript: `function greet(){\n\tconsole.log("Hello World");\n}\ngreet();\n`,
 };
+
+export const PLACEHOLDER = `Example:
+for enter x
+	  enter y enter z
+you can do:
+	  2 
+	  3 4
+which assigns: x=2,y=3,z=4
+
+Also, you don't need input message like: "Enter x:"
+It will only make your output look ugly!
+`;
