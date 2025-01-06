@@ -17,7 +17,6 @@ export default function CodeEditor() {
 	useEffect(() => {
 		setCode(CODE_SNIPPETS[language]);
 		setOutput([]);
-		setInput("");
 	}, [language]);
 
 	useEffect(() => {
@@ -79,7 +78,6 @@ export default function CodeEditor() {
 				<InputOutputSection
 					output={output}
 					isError={isError}
-					input={input}
 					setInput={setInput}
 				/>
 			</div>
