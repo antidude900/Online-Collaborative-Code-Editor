@@ -1,5 +1,5 @@
 import { EditorState } from "@codemirror/state";
-import {  highlightSelectionMatches } from "@codemirror/search";
+import { highlightSelectionMatches } from "@codemirror/search";
 import {
 	indentWithTab,
 	history,
@@ -64,6 +64,18 @@ export default function EditorSection({ setCode, language, isLoading }) {
 		}
 	}
 
+	const customTheme = EditorView.theme({
+		".cm-selectionBackground": {
+			backgroundColor: "#4A90E2 !important", // Change this to your desired selection color
+			opacity: "0.4", // Adjust transparency if needed
+			
+		},
+		".cm-selectionMatch": {
+			backgroundColor: "#4A90E2", // Soft blue
+			opacity: "0.2", // Subtle transparency for less emphasis
+		  },
+	});
+
 	const onUpdate = EditorView.updateListener.of((v) => {
 		setCode(v.state.doc.toString());
 	});
@@ -96,6 +108,7 @@ export default function EditorSection({ setCode, language, isLoading }) {
 		syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
 		dracula,
 		onUpdate,
+		customTheme,
 	];
 
 	useEffect(() => {

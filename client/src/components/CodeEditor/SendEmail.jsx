@@ -51,7 +51,7 @@ export default function SendEmail({ code, input, output }) {
 							onClick={() =>
 								send(
 									address,
-									`Code:\n${code},\nInput:\n${input},\nOutput:\n${output}`
+									`Code:\n${code}\nInput:\n${input}\nOutput:\n${output}`
 								)
 							}
 						>

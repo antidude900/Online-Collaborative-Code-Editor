@@ -47,9 +47,9 @@ export default function InputOutputSection({
 					<div className="overflow-auto w-full h-[98%] p-1">
 						{output
 							? output.map((line, i) => (
-									<div key={i} className=" break-words">
-										{line}
-									</div>
+										<pre key={i} className="whitespace-pre-wrap break-words">
+											{line}
+										</pre>
 							  ))
 							: "Run Code to See Output"}
 					</div>
