@@ -9,24 +9,16 @@ import SendEmail from "./SendEmail.jsx";
 export default function CodeEditor() {
 	const [language, setLanguage] = useState("javascript");
 	const [code, setCode] = useState("Write your code here:");
-	const [output, setOutput] = useState("");
+	const [output, setOutput] = useState([]);
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(null);
 
 	useEffect(() => {
 		setCode(CODE_SNIPPETS[language]);
-		setOutput("");
+		setOutput([]);
 		setInput("");
 	}, [language]);
-
-	useEffect(() => {
-		console.log(output);
-	}, [output]);
-
-	useEffect(() => {
-		console.log(input);
-	}, [input]);
 
 	useEffect(() => {
 		setIsError(null);
@@ -42,7 +34,11 @@ export default function CodeEditor() {
 				input,
 				setInput
 			);
-			setOutput(result.output.split("\n"));
+			const formattedOutput = result.output
+				.split("\n")
+				.map((line) => line.replace(/\t/g, "    "));
+			setOutput(formattedOutput);
+			console.log(formattedOutput);
 			result.stderr ? setIsError(true) : setIsError(false);
 			console.log(result.output.split("\n"));
 		} catch (error) {
@@ -57,16 +53,12 @@ export default function CodeEditor() {
 				<div className="editor w-[60vw]">
 					<div className="labels flex items-center mb-5 h-[50px]">
 						<div className="label w-[100px] font-bold ml-3">
-							<img
-								src="/logo.png"
-								width={70}
-								height={10}
-							/>
+							<img src="/logo.png" width={70} height={10} />
 						</div>
 						<div className="label-buttons flex justify-between grow mr-3">
 							<LanguageMenu language={language} setLanguage={setLanguage} />
 
-							<SendEmail code={code} input={input} output={output}/>
+							<SendEmail code={code} input={input} output={output.join("\n")} />
 							<div
 								className={`btn ${
 									isLoading ? "cursor-not-allowed opacity-50" : ""
