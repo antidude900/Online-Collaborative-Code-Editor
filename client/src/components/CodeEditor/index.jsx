@@ -1,53 +1,56 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import LanguageMenu from "./LanguageMenu";
 import { CODE_SNIPPETS } from "../../constants.js";
 import { executeCode } from "../../Api";
 import EditorSection from "./EditorSection.jsx";
 import InputOutputSection from "./InputOutputSection.jsx";
 import SendEmail from "./SendEmail.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { setCodeEditor } from "../../store/states/CodeEditor/CodeEditorSlice.js";
 
 export default function CodeEditor() {
-	const [language, setLanguage] = useState("javascript");
-	const [code, setCode] = useState("Write your code here:");
-	const [output, setOutput] = useState([]);
-	const [input, setInput] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(null);
 
+	const { code, language, input, isLoading } = useSelector(
+		(state) => state.codeEditor
+	);
+
+	const dispatch = useDispatch();
+	const setState = (state) => {
+		dispatch(setCodeEditor(state));
+	};
+	
 	useEffect(() => {
-		setCode(CODE_SNIPPETS[language]);
-		setOutput([]);
+		setState({ code: CODE_SNIPPETS[language] });
+		setState({ output: [] });
 	}, [language]);
 
 	useEffect(() => {
-		setIsError(null);
+		setState({ isError: null });
 	}, [code]);
 
 	async function runCode() {
 		if (!code) return;
 		try {
-			setIsLoading(true);
-			const { run: result } = await executeCode(
-				language,
-				code,
-				input,
-				setInput
-			);
+			setState({ isLoading: true });
+			const { run: result } = await executeCode(language, code, input);
 			const formattedOutput = result.output
 				.split("\n")
 				.map((line) => line.replace(/\t/g, "    "));
-			setOutput(formattedOutput);
-			console.log(formattedOutput);
-			result.stderr ? setIsError(true) : setIsError(false);
+
+			setState({ output: formattedOutput });
+			setState({ isError: result.stderr ? true : false });
+
 			console.log(result.output.split("\n"));
 		} catch (error) {
 			console.log(error);
 		} finally {
-			setIsLoading(false);
+			setState({ isLoading: false });
 		}
 	}
 	return (
 		<>
+		
 			<div className="whole-editor flex">
 				<div className="editor w-[60vw]">
 					<div className="labels flex items-center mb-5 h-[50px]">
@@ -55,9 +58,9 @@ export default function CodeEditor() {
 							<img src="/logo.png" width={70} height={10} />
 						</div>
 						<div className="label-buttons flex justify-between grow mr-3">
-							<LanguageMenu language={language} setLanguage={setLanguage} />
+							<LanguageMenu />
 
-							<SendEmail code={code} input={input} output={output.join("\n")} />
+							<SendEmail/>
 							<div
 								className={`btn ${
 									isLoading ? "cursor-not-allowed opacity-50" : ""
@@ -68,19 +71,12 @@ export default function CodeEditor() {
 							</div>
 						</div>
 					</div>
-					<EditorSection
-						setCode={setCode}
-						language={language}
-						isLoading={isLoading}
-					/>
+					<EditorSection />
 				</div>
 
-				<InputOutputSection
-					output={output}
-					isError={isError}
-					setInput={setInput}
-				/>
+				<InputOutputSection />
 			</div>
 		</>
 	);
 }
+// code={code} input={input} output={output.join("\n")}

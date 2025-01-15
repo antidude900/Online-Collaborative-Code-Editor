@@ -1,14 +1,15 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { PLACEHOLDER } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setCodeEditor } from "../../store/states/CodeEditor/CodeEditorSlice";
 
+export default function InputOutputSection() {
+	const { output, isError, input } = useSelector((state) => state.codeEditor);
+	const dispatch = useDispatch();
 
-
-export default function InputOutputSection({ output, isError, setInput }) {
 	const [isScrollable, setIsScrollable] = useState(false);
 	const textareaRef = useRef(null);
 
-	// Combined function to check if textarea is scrollable and handle arrow visibility
 	const checkIfScrollable = () => {
 		if (textareaRef.current) {
 			const isScrollable =
@@ -17,20 +18,17 @@ export default function InputOutputSection({ output, isError, setInput }) {
 				textareaRef.current.scrollHeight - textareaRef.current.scrollTop ===
 				textareaRef.current.clientHeight;
 
-			setIsScrollable(isScrollable && !isAtBottom); // Show arrow if scrollable and not at the bottom
+			setIsScrollable(isScrollable && !isAtBottom);
 		}
 	};
 
 	useEffect(() => {
-		// Check scrollability on mount
 		checkIfScrollable();
 
-		// Add event listener for scroll
 		if (textareaRef.current) {
 			textareaRef.current.addEventListener("scroll", checkIfScrollable);
 		}
 
-		// Re-check if scrollable when window is resized
 		window.addEventListener("resize", checkIfScrollable);
 
 		return () => {
@@ -43,14 +41,12 @@ export default function InputOutputSection({ output, isError, setInput }) {
 	}, []);
 
 	const scrollToBottom = () => {
-		if (textareaRef.current) 
-		  textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
-		
-	}
-	
+		if (textareaRef.current)
+			textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+	};
 
 	const handleInputChange = (e) => {
-		setInput(e.target.value);
+		dispatch(setCodeEditor({ input: e.target.value }));
 		checkIfScrollable(); // Recheck scrollability on input change
 	};
 
@@ -72,13 +68,18 @@ export default function InputOutputSection({ output, isError, setInput }) {
 				>
 					<textarea
 						ref={textareaRef}
-						className="w-full h-full bg-inherit outline-none resize-none"
+						className={`w-full h-full bg-inherit outline-none resize-none ${
+							input === "" && "text-[10px]"
+						}`}
 						placeholder={PLACEHOLDER}
 						onChange={handleInputChange}
 					/>
 					{isScrollable && (
 						<div className="absolute top-[110px] right-[260px] text-white opacity-50 font-bold">
-							<span className="text-xl border-4 border-gray-500 rounded-full cursor-pointer" onClick={scrollToBottom}>
+							<span
+								className="text-xl border-4 border-gray-500 rounded-full cursor-pointer"
+								onClick={scrollToBottom}
+							>
 								↓
 							</span>
 						</div>
