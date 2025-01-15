@@ -33,7 +33,7 @@ export default function SendEmail() {
 			</div>
 			<ul
 				tabIndex="0"
-				className="dropdown-content bg-base-100 rounded-box z-[1] p-5 w-[400px] shadow"
+				className="dropdown-content bg-base-100 rounded-box z-[1] p-5 w-[370px] shadow"
 			>
 				{" "}
 				<li>
