@@ -1,17 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-// eslint-disable-next-line react/prop-types
-export default function SendEmail({ code, input, output }) {
+export default function SendEmail() {
+	const { code, input, output } = useSelector((state) => state.codeEditor);
 	const [sending, setSending] = useState(false);
 	const [address, setAddress] = useState("");
+	const [subject, setSubject] = useState("");
 	async function send(to, message) {
-		console.log(to, message);
 		try {
 			setSending(true);
 			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/SendMail`, {
 				to: to,
-				subject: "Code From LinkCode",
+				subject: subject || "Code From LinkCode",
 				message: message,
 			});
 			alert("Email sent!");
@@ -22,7 +23,7 @@ export default function SendEmail({ code, input, output }) {
 		}
 	}
 	return (
-		<div className="dropdown">
+		<div className="dropdown p-0">
 			<div
 				tabIndex="0"
 				role="button"
@@ -32,17 +33,24 @@ export default function SendEmail({ code, input, output }) {
 			</div>
 			<ul
 				tabIndex="0"
-				className="dropdown-content menu bg-base-100 rounded-box z-[1] w-[450px] p-2 shadow"
+				className="dropdown-content bg-base-100 rounded-box z-[1] p-5 w-[400px] shadow"
 			>
 				{" "}
 				<li>
-					<div className="flex">
+					<div className="flex flex-col gap-3">
 						<input
 							type="email"
 							placeholder="Enter your address here..."
-							className="input w-[300px]"
+							className="input border-gray-700"
 							value={address}
 							onChange={(e) => setAddress(e.target.value)}
+						/>
+						<input
+							type="text"
+							placeholder="Enter the subject of the mail here..."
+							className="input border-gray-700"
+							value={subject}
+							onChange={(e) => setSubject(e.target.value)}
 						/>
 						<div
 							className={`btn ${

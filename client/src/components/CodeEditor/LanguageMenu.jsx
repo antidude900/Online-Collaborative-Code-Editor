@@ -1,15 +1,19 @@
 import { ChevronDown } from "lucide-react";
 import { LANGUAGES } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setCodeEditor } from "../../store/states/CodeEditor/CodeEditorSlice";
 
-// eslint-disable-next-line react/prop-types
-export default function LanguageMenu({language,setLanguage}) {
+export default function LanguageMenu() {
+	const { language } = useSelector((state) => state.codeEditor);
+	const dispatch = useDispatch();
+
 	const languages = Object.entries(LANGUAGES);
 	const handleClick = (lang) => {
 		const elem = document.activeElement;
 		if (elem) {
 			elem?.blur();
 		}
-		if (lang !== language) setLanguage(lang);
+		if (lang !== language) dispatch(setCodeEditor({ language: lang }));
 	};
 	return (
 		<div className="dropdown">
