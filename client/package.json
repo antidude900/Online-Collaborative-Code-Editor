@@ -21,6 +21,7 @@
 		"@codemirror/view": "^6.36.1",
 		"@monaco-editor/react": "^4.6.0",
 		"@open-rpc/client-js": "^1.8.1",
+		"@reduxjs/toolkit": "^2.5.0",
 		"@uiw/codemirror-theme-dracula": "^4.23.7",
 		"axios": "^1.7.9",
 		"codemirror": "^5.65.18",
@@ -29,6 +30,7 @@
 		"react": "^18.3.1",
 		"react-codemirror2": "^8.0.0",
 		"react-dom": "^18.3.1",
+		"react-redux": "^9.2.0",
 		"thememirror": "^2.0.1"
 	},
 	"devDependencies": {
