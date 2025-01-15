@@ -47,7 +47,7 @@ import { CODE_SNIPPETS } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setCodeEditor } from "../../store/states/CodeEditor/CodeEditorSlice";
 
-// eslint-disable-next-line react/prop-types
+
 export default function EditorSection() {
 	const { language, isLoading } = useSelector((state) => state.codeEditor);
 	

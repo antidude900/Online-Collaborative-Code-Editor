@@ -47,7 +47,7 @@ export default function InputOutputSection() {
 
 	const handleInputChange = (e) => {
 		dispatch(setCodeEditor({ input: e.target.value }));
-		checkIfScrollable(); // Recheck scrollability on input change
+		checkIfScrollable();
 	};
 
 	return (
