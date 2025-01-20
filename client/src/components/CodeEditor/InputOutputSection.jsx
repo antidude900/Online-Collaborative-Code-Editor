@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import { PLACEHOLDER } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +8,8 @@ export default function InputOutputSection() {
 	const { output, isError, input } = useSelector((state) => state.codeEditor);
 	const dispatch = useDispatch();
 
-	const [isScrollable, setIsScrollable] = useState(false);
+	const [isScrollableDown, setIsScrollableDown] = useState(false);
+	const [isScrollableUp, setIsScrollableUp] = useState(false);
 	const textareaRef = useRef(null);
 
 	const checkIfScrollable = () => {
@@ -17,8 +19,10 @@ export default function InputOutputSection() {
 			const isAtBottom =
 				textareaRef.current.scrollHeight - textareaRef.current.scrollTop ===
 				textareaRef.current.clientHeight;
+			const isAtTop = textareaRef.current.scrollTop === 0;
 
-			setIsScrollable(isScrollable && !isAtBottom);
+			setIsScrollableDown(isScrollable && !isAtBottom);
+			setIsScrollableUp(isScrollable && !isAtTop);
 		}
 	};
 
@@ -33,7 +37,7 @@ export default function InputOutputSection() {
 
 		return () => {
 			if (textareaRef.current) {
-				// eslint-disable-next-line react-hooks/exhaustive-deps
+				
 				textareaRef.current.removeEventListener("scroll", checkIfScrollable);
 			}
 			window.removeEventListener("resize", checkIfScrollable);
@@ -44,6 +48,12 @@ export default function InputOutputSection() {
 		if (textareaRef.current)
 			textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
 	};
+
+	const scrollToTop = () => {
+		if (textareaRef.current)
+			textareaRef.current.scrollTop = 0
+	};
+
 
 	const handleInputChange = (e) => {
 		dispatch(setCodeEditor({ input: e.target.value }));
@@ -74,10 +84,20 @@ export default function InputOutputSection() {
 						placeholder={PLACEHOLDER}
 						onChange={handleInputChange}
 					/>
-					{isScrollable && (
+					{isScrollableUp && (
+						<div className="absolute top-[-23px] right-[260px] text-white opacity-50 font-bold">
+							<span
+								className="text-xl border-4 border-gray-500 rounded-full cursor-pointer p-[1px] leading-none inline-block "
+								onClick={scrollToTop}
+							>
+								↑
+							</span>
+						</div>
+					)}
+					{isScrollableDown && (
 						<div className="absolute top-[110px] right-[260px] text-white opacity-50 font-bold">
 							<span
-								className="text-xl border-4 border-gray-500 rounded-full cursor-pointer"
+								className="text-xl border-4 border-gray-500 rounded-full cursor-pointer p-[1px] leading-none inline-block"
 								onClick={scrollToBottom}
 							>
 								↓
