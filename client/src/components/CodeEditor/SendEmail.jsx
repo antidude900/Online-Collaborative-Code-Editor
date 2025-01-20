@@ -9,7 +9,7 @@ export default function SendEmail() {
 	const [subject, setSubject] = useState("");
 	const [sendMail] = useSendMailMutation();
 	const formattedOutput = output.join("\n");
-
+  
 	async function send(to, message) {
 		try {
 			setSending(true);
