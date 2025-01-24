@@ -1,7 +1,13 @@
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+import LeftSection from "../components/HomeSections/LeftSection";
+import RightSection from "../components/HomeSections/RightSection";
 
-export default Home
+const Home = () => {
+	return (
+		<div className="flex h-screen">
+			<LeftSection />
+			<RightSection />
+		</div>
+	);
+};
+
+export default Home;

@@ -4,7 +4,11 @@ import daisyui from "./node_modules/daisyui";
 export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			textShadow: {
+				cyan50: "0 4px 6px rgba(0, 184, 212, 0.5)", 
+			},
+		},
 	},
 	plugins: [daisyui],
 	daisyui: {
